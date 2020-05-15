@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class ECardBuilder {
+public class PersonalFileBuilder {
     private String svNumber;
     private  String firstName;
     private  String lastName;
@@ -38,14 +38,6 @@ public class ECardBuilder {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public void setAdditionalAttributes(Map<String, String> additionalAttributes) {
-        this.additionalAttributes = additionalAttributes;
-    }
-
-    public ECard build() {
-        return new ECard(svNumber, firstName, lastName, cardSequenceNumber, sex, dateOfBirth, additionalAttributes,debugOutput);
-    }
-
     public void setDebugOutput(String debugOutput) {
         this.debugOutput = debugOutput;
     }
@@ -55,5 +47,9 @@ public class ECardBuilder {
             this.additionalAttributes = new LinkedHashMap<>();
         }
         this.additionalAttributes.put(identifier, value);
+    }
+
+    public PersonalFile build() {
+        return new PersonalFile(svNumber, firstName, lastName, cardSequenceNumber, sex, dateOfBirth, additionalAttributes,debugOutput);
     }
 }

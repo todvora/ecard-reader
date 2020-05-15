@@ -1,71 +1,30 @@
 package cz.tomasdvorak.ecard.reader.dto;
 
-import java.util.Date;
-import java.util.Map;
+import cz.tomasdvorak.ecard.reader.dto.EHICData;
+import cz.tomasdvorak.ecard.reader.dto.PersonalFile;
 
 public class ECard {
-    private final String svNumber;
-    private final String firstName;
-    private final String lastName;
-    private final String cardSequenceNumber;
-    private final String sex;
-    private final Date dateOfBirth;
-    private final Map<String, String> additionalAttributes;
-    private final String debugOutput;
+    private final PersonalFile personalFile;
+    private final EHICData ehicData;
 
-    public ECard(String svNumber, String firstName, String lastName, String cardSequenceNumber, String sex, Date dateOfBirth, Map<String, String> additionalAttributes, String debugOutput) {
-        this.svNumber = svNumber;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.cardSequenceNumber = cardSequenceNumber;
-        this.sex = sex;
-        this.dateOfBirth = dateOfBirth;
-        this.additionalAttributes = additionalAttributes;
-        this.debugOutput = debugOutput;
+    public ECard(PersonalFile personalFile, EHICData ehicData) {
+        this.personalFile = personalFile;
+        this.ehicData = ehicData;
     }
 
-    public String getSvNumber() {
-        return svNumber;
+    public PersonalFile getPersonalFile() {
+        return personalFile;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getCardSequenceNumber() {
-        return cardSequenceNumber;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public Map<String, String> getAdditionalAttributes() {
-        return additionalAttributes;
-    }
-
-    public String getDebugOutput() {
-        return debugOutput;
+    public EHICData getEhicData() {
+        return ehicData;
     }
 
     @Override
     public String toString() {
-        return "{" +
-                "svNumber='" + svNumber + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", cardSequenceNumber='" + cardSequenceNumber + '\'' +
-                ", sex='" + sex + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
-                ", additionalAttributes=" + additionalAttributes +
+        return "ECard{" +
+                "personalFile=" + personalFile +
+                ", ehicData=" + ehicData +
                 '}';
     }
 }
