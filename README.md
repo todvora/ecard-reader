@@ -1,10 +1,12 @@
 ## Java reader for austrian E-Cards
 
-Let's have some fun with austrian insurance cards called ecard. They hold some information readable in any smartcard reader.
-Just connect to your computer a smartcard reader and start coding:
+This is an example project to demonstrate reading of the personal data from austrian ecards. 
 
-### Usage
+You will need an smartcard reader connected to the computer.
+
+### Example
 The reader provides notifications on card insertion and removal. Both events allow identification of the terminal.
+
 ```java
 ECardListener listener = new ECardListener() {
     @Override
@@ -23,7 +25,15 @@ eCardReader.start();
 eCardReader.join();
 ```
 
-Following information structure is provided for each E-Card:
+This example code prints following statements:
+
+```
+Card inserted into terminal Gemalto PC Twin Reader (9BF12708) 00 00
+ECard{personalFile=...
+Card removed from terminal Gemalto PC Twin Reader (9BF12708) 00 00
+```
+
+Where the ecard information has a structure like this:
 
 ```
 ECard{
@@ -54,3 +64,5 @@ ECard{
 (`XXXXXXXX` is just a placeholder to hide my personal information, you get full information from your card)
 
 All attributes are available via the `ECard` response type with `personalFile` and `ehicData`
+
+The reader keeps reading and pushing notifications as long as you keep it running. 
