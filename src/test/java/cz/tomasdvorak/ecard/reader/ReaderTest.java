@@ -1,8 +1,6 @@
 package cz.tomasdvorak.ecard.reader;
 
 import cz.tomasdvorak.ecard.reader.dto.ECard;
-import cz.tomasdvorak.ecard.reader.dto.PersonalFile;
-import org.junit.jupiter.api.Test;
 
 import javax.smartcardio.CardTerminal;
 

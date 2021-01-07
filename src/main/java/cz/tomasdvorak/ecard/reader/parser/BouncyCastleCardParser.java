@@ -8,9 +8,11 @@ import org.bouncycastle.asn1.*;
 import org.bouncycastle.asn1.util.ASN1Dump;
 
 import javax.smartcardio.ResponseAPDU;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.Enumeration;
 
 public class BouncyCastleCardParser implements CardParser {
     @Override
@@ -38,7 +40,7 @@ public class BouncyCastleCardParser implements CardParser {
                         personalFileBuilder.setFirstName(DERUTF8String.getInstance(value).getString());
                         break;
                     case "2.5.4.4":
-                        personalFileBuilder.setLastName(DERUTF8String.getInstance(value).getString());
+                        personalFileBuilder.setLastName(parseLastName(svn));
                         break;
                     case "1.3.6.1.5.5.7.9.3":
                         personalFileBuilder.setSex(DERPrintableString.getInstance(value).getString());
@@ -54,6 +56,21 @@ public class BouncyCastleCardParser implements CardParser {
 
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * There is a difference between old cards without photo and new with photo!
+     */
+    private String parseLastName(ASN1Set svn) {
+        final Enumeration<ASN1Encodable> enumeration = svn.getObjects();
+        ASN1Encodable firstObject = enumeration.nextElement();
+        if(enumeration.hasMoreElements()) {
+            // this is the new card, surname in second element
+            return DERUTF8String.getInstance(enumeration.nextElement()).getString();
+        } else {
+            // old card, decode and return
+            return DERUTF8String.getInstance(firstObject).getString();
         }
     }
 

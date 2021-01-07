@@ -45,7 +45,7 @@ public class ECardReader extends Thread {
                     terminalFactory.terminals().waitForChange();
                     terminalFactory.terminals().list(CardTerminals.State.CARD_REMOVAL).forEach(listener::onCardRemoved);
                     terminalFactory.terminals().list(CardTerminals.State.CARD_INSERTION).forEach(terminal -> listener.onCardInserted(terminal, readECard(terminal)));
-                } catch (CardException e) {
+                } catch (Exception e) {
                     if (e.getCause() != null && e.getCause().getMessage().equals("SCARD_E_NO_READERS_AVAILABLE")) {
                         logger.info("No card reader detected, connect one to the computer, re-trying after 5s");
                         try {
@@ -73,13 +73,13 @@ public class ECardReader extends Thread {
             Card card = terminal.connect("*");
             CardChannel channel = card.getBasicChannel();
             // Select the MF
-            channel.transmit(new CommandAPDU(0x00, 0xA4, 0x04, 0x00, MAIN_FILE_AID));
+            ResponseAPDU response = channel.transmit(new CommandAPDU(0x00, 0xA4, 0x04, 0x00, MAIN_FILE_AID, 0x100));
             // Select the Personaladata-file
-            channel.transmit(new CommandAPDU(0x00, 0xA4, 0x02, 0x04, PERSONALDATA_FILE_AID));
+            ResponseAPDU response2 = channel.transmit(new CommandAPDU(0x00, 0xA4, 0x02, 0x04, PERSONALDATA_FILE_AID, 0x100));
             // Get the data from the file
             PersonalFile personalFile = cardParser.parsePersonalFile(channel.transmit(new CommandAPDU(0x00, 0xB0, 0x00, 0x00, 0xFF)));
             // Select the Personaladata-file
-            channel.transmit(new CommandAPDU(0x00, 0xA4, 0x02, 0x04, EHIC_FILE_AID));
+            channel.transmit(new CommandAPDU(0x00, 0xA4, 0x02, 0x04, EHIC_FILE_AID,0x100));
             // Get the data from the file
             EHICData ehicData = cardParser.parseEHICData(channel.transmit(new CommandAPDU(0x00, 0xB0, 0x00, 0x00, 0xFF)));
             card.disconnect(false);
