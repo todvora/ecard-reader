@@ -79,7 +79,7 @@ public class EHICData {
 
     @Override
     public String toString() {
-        return "EHICData{" +
+        return "{" +
                 "countryCode='" + countryCode + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +

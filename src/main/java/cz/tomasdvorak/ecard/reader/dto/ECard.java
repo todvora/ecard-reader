@@ -1,8 +1,5 @@
 package cz.tomasdvorak.ecard.reader.dto;
 
-import cz.tomasdvorak.ecard.reader.dto.EHICData;
-import cz.tomasdvorak.ecard.reader.dto.PersonalFile;
-
 public class ECard {
     private final PersonalFile personalFile;
     private final EHICData ehicData;
